@@ -1,3 +1,6 @@
+import {z} from "zod";
+import * as schema from "@/data-layer/adapters/schema";
+
 export enum Events {
     _3x3 = "3x3",
     _2x2 = "2x2",
@@ -17,3 +20,21 @@ export enum Events {
     OH = "OH",
     MULTI_BLIND = "Multi Blind",
 }
+
+export enum PenaltyTypes {
+    DNF= "DNF",
+    PLUS_TWO = "+2",
+    NONE= "None",
+}
+
+export type Solve = typeof schema.solves.$inferSelect;
+export type createSolve = typeof schema.solves.$inferInsert;
+export type updateSolve = Partial<createSolve>;
+
+export type User = typeof schema.users.$inferSelect;
+export type createUser = typeof schema.users.$inferInsert;
+export type updateUser = Partial<createUser>;
+
+export type Session = typeof schema.sessions.$inferSelect; // change to include solves later
+export type createSession = typeof schema.sessions.$inferInsert;
+export type updateSession = Partial<createSession>;
