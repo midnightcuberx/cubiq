@@ -31,15 +31,15 @@ export class SolveService {
 
     public static async createSolve(solve: createSolve): Promise<Solve> {
         const res = await db.insert(solves).values(solve).returning().onConflictDoNothing();
-        return res[0];
+        return res[0]!;
     }
 
-    public static async updateSolve(solveId: number, updatedSolve: Partial<Solve>): Promise<Solve | undefined> {
+    public static async updateSolve(solveId: number, updatedSolve: Partial<Solve>): Promise<Solve> {
         const res = await db.update(solves)
             .set(updatedSolve)
             .where(eq(solves.solveId, solveId))
             .returning();
-        return res[0];
+        return res[0]!;
     }
 
     public static async deleteSolve(solveId: number): Promise<void> {
