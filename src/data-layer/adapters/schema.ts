@@ -4,7 +4,7 @@ import { pgEnum, pgTable, serial, text, timestamp, integer } from "drizzle-orm/p
 
 export const users = pgTable("users", {
     username: text("username").notNull().unique(),
-    authId: text("authId").notNull().unique(),
+    authId: text("authId").notNull().unique().primaryKey(),
     createdAt: timestamp("createdAt", {mode: "date"}).notNull().defaultNow(),
 });
 
