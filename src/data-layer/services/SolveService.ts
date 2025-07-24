@@ -1,7 +1,7 @@
 import { solves } from '@/data-layer/adapters/schema';
 import { eq } from 'drizzle-orm';
 import { db } from '@/data-layer/adapters/db';
-import { createSolve, Solve } from '@/types/types';
+import { createSolve, Solve, updateSolve } from '@/types/types';
 
 
 export class SolveService {
@@ -34,7 +34,7 @@ export class SolveService {
         return res[0]!;
     }
 
-    public static async updateSolve(solveId: number, updatedSolve: Partial<Solve>): Promise<Solve> {
+    public static async updateSolve(solveId: number, updatedSolve: updateSolve): Promise<Solve> {
         const res = await db.update(solves)
             .set(updatedSolve)
             .where(eq(solves.solveId, solveId))
