@@ -1,5 +1,5 @@
 {
-  "id": "c2120f59-ad67-4037-adb2-0f55926beb03",
+  "id": "3947e1d1-982b-48a6-9904-89caf42b2c26",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -78,6 +78,26 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "time": {
+          "name": "time",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "penalty": {
+          "name": "penalty",
+          "type": "penaltyTypes",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'None'"
+        },
+        "scramble": {
+          "name": "scramble",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -158,6 +178,15 @@
         "FMC",
         "OH",
         "Multi Blind"
+      ]
+    },
+    "public.penaltyTypes": {
+      "name": "penaltyTypes",
+      "schema": "public",
+      "values": [
+        "DNF",
+        "+2",
+        "None"
       ]
     }
   },

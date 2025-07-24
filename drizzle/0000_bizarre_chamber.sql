@@ -1,4 +1,5 @@
 CREATE TYPE "public"."events" AS ENUM('3x3', '2x2', '4x4', '5x5', '6x6', '7x7', 'Square-1', 'Pyraminx', 'Skewb', 'Clock', 'Megaminx', '3 Blind', '4 Blind', '5 Blind', 'FMC', 'OH', 'Multi Blind');--> statement-breakpoint
+CREATE TYPE "public"."penaltyTypes" AS ENUM('DNF', '+2', 'None');--> statement-breakpoint
 CREATE TABLE "sessions" (
 	"sessionId" serial PRIMARY KEY NOT NULL,
 	"userId" text NOT NULL,
@@ -11,7 +12,10 @@ CREATE TABLE "solves" (
 	"userId" text NOT NULL,
 	"sessionId" text NOT NULL,
 	"event" "events" NOT NULL,
-	"createdAt" timestamp DEFAULT now() NOT NULL
+	"createdAt" timestamp DEFAULT now() NOT NULL,
+	"time" integer NOT NULL,
+	"penalty" "penaltyTypes" DEFAULT 'None',
+	"scramble" text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "users" (

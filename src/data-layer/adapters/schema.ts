@@ -1,6 +1,6 @@
-import { Events } from "@/types/types";
+import { Events, PenaltyTypes } from "@/types/types";
 import { relations } from "drizzle-orm";
-import { pgEnum, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import { pgEnum, pgTable, serial, text, timestamp, integer } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
     username: text("username").notNull().unique(),
@@ -9,6 +9,7 @@ export const users = pgTable("users", {
 });
 
 export const eventsEnum = pgEnum("events", Object.values(Events) as [Events, ...Events[]]);
+export const penaltyTypesEnum = pgEnum("penaltyTypes", Object.values(PenaltyTypes) as [PenaltyTypes, ...PenaltyTypes[]]);
 
 export const sessions = pgTable("sessions", {
     sessionId: serial("sessionId").primaryKey(),
@@ -23,6 +24,9 @@ export const solves = pgTable("solves", {
     sessionId: text("sessionId").notNull(),
     event: eventsEnum("event").notNull(),
     createdAt: timestamp("createdAt", {mode: "date"}).notNull().defaultNow(),
+    time: integer("time").notNull(),
+    penalty: penaltyTypesEnum("penalty").default(PenaltyTypes.NONE),
+    scramble: text("scramble").notNull()
 });
 
 export const userRelations = relations(users, ({many}) => ({
@@ -30,14 +34,11 @@ export const userRelations = relations(users, ({many}) => ({
     solves: many(solves),
 }));
 
-export const sessionRelations = relations(sessions, ({one}) => ({
+export const sessionRelations = relations(sessions, ({one, many}) => ({
     user: one(users, {
         fields: [sessions.userId],
         references: [users.authId],
     }),
-}));
-
-export const sessionRelations2 = relations(sessions, ({many}) => ({
     solves: many(solves),
 }));
 
