@@ -22,7 +22,7 @@ export class SolveService {
         return res;
     }
 
-    public static async getSolvesBySessionId(sessionId: string): Promise<Solve[]>{
+    public static async getSolvesBySessionId(sessionId: number): Promise<Solve[]>{
         const res = await db.query.solves.findMany({
             where: eq(solves.sessionId, sessionId)
         });
@@ -46,7 +46,7 @@ export class SolveService {
         await db.delete(solves).where(eq(solves.solveId, solveId));
     }
 
-    public static async deleteSolvesBySessionId(sessionId: string): Promise<void> {
+    public static async deleteSolvesBySessionId(sessionId: number): Promise<void> {
         await db.delete(solves).where(eq(solves.sessionId, sessionId));
     }
 

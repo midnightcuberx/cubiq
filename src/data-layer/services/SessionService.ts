@@ -1,4 +1,4 @@
-import { sessions } from '@/data-layer/adapters/schema';
+import { sessions, solves } from '@/data-layer/adapters/schema';
 import { eq } from 'drizzle-orm';
 import { db } from '@/data-layer/adapters/db';
 import { createSession, Session, updateSession } from '@/types/types';
@@ -41,6 +41,9 @@ export class SessionService {
     }
 
     public static async deleteSession(sessionId: number): Promise<void> {
-        await db.delete(sessions).where(eq(sessions.sessionId, sessionId));
+        await db.transaction(async (tx) => {
+            await tx.delete(sessions).where(eq(sessions.sessionId, sessionId));
+            await tx.delete(solves).where(eq(solves.sessionId, sessionId));
+        });
     }
 }

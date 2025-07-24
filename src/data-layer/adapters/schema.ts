@@ -21,7 +21,7 @@ export const sessions = pgTable("sessions", {
 export const solves = pgTable("solves", {
     solveId: serial("solveId").primaryKey(),
     userId: text("userId").notNull(),
-    sessionId: text("sessionId").notNull(),
+    sessionId: integer("sessionId").notNull(),
     event: eventsEnum("event").notNull(),
     createdAt: timestamp("createdAt", {mode: "date"}).notNull().defaultNow(),
     time: integer("time").notNull(),
